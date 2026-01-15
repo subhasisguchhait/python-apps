@@ -1,0 +1,61 @@
+# ...existing code...
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+env/
+venv/
+.venv/
+pip-wheel-metadata/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+
+# Virtualenvs (anywhere)
+venv/
+.venv/
+
+# IDEs/editors
+.vscode/
+.idea/
+*.sublime-workspace
+
+# Logs and DBs
+*.log
+logs/
+*.sqlite3
+*.db
+
+# Environment and secrets
+.env
+*.env
+secrets/
+*.pem
+*.key
+local_settings.py
+
+# Node
+node_modules/
+
+# Coverage
+.coverage
+htmlcov/
+
+# Build/distribution
+*.tgz
+*.zip
+
+# Example: ignore any folder named "private" anywhere
+private/
+**/private/**
+
+# ...existing code...
