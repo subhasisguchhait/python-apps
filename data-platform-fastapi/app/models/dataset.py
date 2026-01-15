@@ -1,4 +1,4 @@
-from ..api.core.database import Base
+from ..core.database import Base
 from sqlalchemy import Column, Integer, String, DateTime
 from datetime import datetime, timezone
 

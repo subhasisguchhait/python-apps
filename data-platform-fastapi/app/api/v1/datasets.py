@@ -1,9 +1,10 @@
 from fastapi import HTTPException, status, APIRouter, Depends, Query
 from ...schemas.dataset import DatasetCreate, DatasetResponse, DatasetUpdate, DatasetMultipleUpdate
 from sqlalchemy import select
-from ..core.database import get_db
+from ...core.database import get_db
 from ...models.dataset import Dataset
 from sqlalchemy.ext.asyncio import AsyncSession
+from ...api.deps import get_current_user
 
 router = APIRouter(prefix="/datasets", tags=["datasets"])
 
@@ -27,7 +28,8 @@ router = APIRouter(prefix="/datasets", tags=["datasets"])
 
 
 @router.post("/create", response_model=DatasetResponse, status_code=status.HTTP_201_CREATED)
-async def create_dataset(dataset: DatasetCreate, db: AsyncSession = Depends(get_db)):
+async def create_dataset(dataset: DatasetCreate, current_user: str = Depends(get_current_user),
+                         db: AsyncSession = Depends(get_db)):
     db_dataset = Dataset(**dataset.model_dump())
     db.add(db_dataset)
     await db.commit()
@@ -36,14 +38,13 @@ async def create_dataset(dataset: DatasetCreate, db: AsyncSession = Depends(get_
 
 @router.get("/list/all", response_model=list[DatasetResponse])
 async def list_datasets(skip: int = Query(default=0, gte=0), 
-                        limit: int = Query(default=10, lte=100),
-    db: AsyncSession = Depends(get_db)):
+                        limit: int = Query(default=10, lte=100), current_user: str = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(Dataset).offset(skip).limit(limit))
     datasets = result.scalars().all()
     return datasets
 
 @router.get("/{dataset_id}", response_model=DatasetResponse)
-async def get_dataset(dataset_id: int, db: AsyncSession = Depends(get_db)):
+async def get_dataset(dataset_id: int, current_user: str = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(Dataset).where(Dataset.id == dataset_id))
     dataset = result.scalar_one_or_none()
     if not dataset:
@@ -52,7 +53,7 @@ async def get_dataset(dataset_id: int, db: AsyncSession = Depends(get_db)):
 
 
 @router.put("/{dataset_id}", response_model=DatasetResponse)
-async def update_dataset(dataset_id: int, updated_data: DatasetUpdate, db: AsyncSession = Depends(get_db)):
+async def update_dataset(dataset_id: int, updated_data: DatasetUpdate, current_user: str = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(Dataset).where(Dataset.id == dataset_id))
     dataset = result.scalar_one_or_none()
     if not dataset:
@@ -65,7 +66,7 @@ async def update_dataset(dataset_id: int, updated_data: DatasetUpdate, db: Async
 
 
 @router.delete("/{dataset_id}", status_code=status.HTTP_200_OK)
-async def delete_dataset(dataset_id: int, db: AsyncSession = Depends(get_db)):
+async def delete_dataset(dataset_id: int, current_user: str = Depends(get_current_user),db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(Dataset).where(Dataset.id == dataset_id))
     dataset = result.scalar_one_or_none()
     if not dataset:
@@ -76,7 +77,7 @@ async def delete_dataset(dataset_id: int, db: AsyncSession = Depends(get_db)):
 
 
 @router.put("/update/multiple", response_model=list[DatasetResponse])
-async def update_multiple_datasets(datasets: list[DatasetMultipleUpdate], db: AsyncSession = Depends(get_db)):
+async def update_multiple_datasets(datasets: list[DatasetMultipleUpdate], current_user: str = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     updated_datasets = []
     for data in datasets:
         result = await db.execute(select(Dataset).where(Dataset.id == data.id))
@@ -91,7 +92,7 @@ async def update_multiple_datasets(datasets: list[DatasetMultipleUpdate], db: As
     return updated_datasets
 
 @router.delete("/delete/multiple", status_code=status.HTTP_200_OK)
-async def delete_multiple_datasets(dataset_ids: list[int] = Query(...), db: AsyncSession = Depends(get_db)):
+async def delete_multiple_datasets(dataset_ids: list[int] = Query(...), current_user: str = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     for dataset_id in dataset_ids:
         result = await db.execute(select(Dataset).where(Dataset.id == dataset_id))
         dataset = result.scalar_one_or_none()
