@@ -1,0 +1,10 @@
+FastAPI is a modern Python web framework for building APIs with high performance.
+It is based on Starlette and Pydantic.
+
+RAG stands for Retrieval Augmented Generation.
+It helps reduce hallucinations by grounding LLM answers in external data.
+
+FAISS is a vector database library developed by Facebook.
+It is used for fast similarity search on embeddings.
+
+Streamlit is a Python framework for building data apps quickly.
