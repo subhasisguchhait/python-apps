@@ -16,8 +16,8 @@ if "token" not in st.session_state:
 
 with st.sidebar:
     st.sidebar.header("Login/Logout")
-    username = st.sidebar.text_input("Username", value="") # "emma"
-    password = st.sidebar.text_input("Password", type="password", value="")  # password123
+    username = st.sidebar.text_input("Username", value="")
+    password = st.sidebar.text_input("Password", type="password", value="")
 
     if st.button("Login"):
         if username and password:
@@ -54,7 +54,6 @@ if st.button("Run"):
 
     headers={"Content-Type": "application/json", "Accept": "application/json"}
              
-    #Pending activity - "authorization": "Bearer YOUR_API_KEY_HERE"}
     st.write(payload)
 
     response = requests.post(url, json=payload, headers=headers)
