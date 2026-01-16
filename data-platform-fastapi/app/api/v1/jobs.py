@@ -4,7 +4,7 @@ from sqlalchemy.future import select
 from ...core.database import get_db
 from ...models.job import Job
 from ...schemas.job import JobResponse
-from ...schemas.processing import process_dataset
+from ...services.processing import process_dataset
 from ...api.deps import get_current_user
 
 router = APIRouter(prefix="/jobs", tags=["Jobs"])

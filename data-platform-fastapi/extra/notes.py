@@ -60,9 +60,9 @@ Add authentication and authorization using JWT tokens
 
         
 For background processing jobs          
-    - Create Job model and JobResponse schema
+    - Create Job model and JobResponse schema - job.py
     - Create jobs table in the db - Make to sure to run create_tables.py again and from the root folder
-    - Background Processing function to simulate dataset processing - processing.py
+    - Background Processing function to simulate dataset processing - services/processing.py
         - Never put this in the route handler directly as it will block the main event loop
     - Create job creation endpoint that starts a background task to process a dataset
     - Protect job endpoints to allow only authenticated users
