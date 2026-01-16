@@ -57,7 +57,19 @@ Add authentication and authorization using JWT tokens
     - Protect dataset endpoints to allow only authenticated users
     - OAuth2PasswordRequestForm = Depends() for login form data from swagger ui
         - if not using form data, use pydantic model for login request body - ex - UserCreate model can be reused
-    
+
+        
+For background processing jobs          
+    - Create Job model and JobResponse schema
+    - Create jobs table in the db - Make to sure to run create_tables.py again and from the root folder
+    - Background Processing function to simulate dataset processing - processing.py
+        - Never put this in the route handler directly as it will block the main event loop
+    - Create job creation endpoint that starts a background task to process a dataset
+    - Protect job endpoints to allow only authenticated users
+    - Register jobs router in the main app with versioned prefix /api/v1
+
+
+
 Sample request to create dataset:
 {
   "name": "order1",

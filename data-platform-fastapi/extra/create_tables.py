@@ -31,6 +31,16 @@ class User(Base):
     created_at = Column(DateTime , default=datetime.now(timezone.utc))
     updated_at = Column(DateTime, default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))   
 
+class Job(Base):
+    __tablename__ = "jobs"
+
+    id = Column(Integer, primary_key=True, index=True)
+    dataset_id = Column(Integer, index=True)
+    status = Column(String, default="PENDING")  # Possible values: PENDING, RUNNING, COMPLETED, FAILED
+    message = Column(String, nullable=True)
+    created_at = Column(DateTime(timezone=True), default=datetime.now(timezone.utc))
+    updated_at = Column(DateTime(timezone=True), default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
+
 if __name__ == "__main__":
     print("CWD:", os.getcwd())
     print("Engine URL:", engine.url)
@@ -42,7 +52,9 @@ if __name__ == "__main__":
     # # or create a single table explicitly (checkfirst=True prevents recreate)
     # Dataset.__table__.create(bind=engine, checkfirst=True)
     # User.__table__.create(bind=engine, checkfirst=True)
-    # print("Tables created successfully.")
+
+    Job.__table__.create(bind=engine, checkfirst=True)
+    print("Tables created successfully.")
 
     # show tables
     with engine.connect() as connection:
