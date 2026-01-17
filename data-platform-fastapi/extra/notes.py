@@ -57,8 +57,7 @@ Add authentication and authorization using JWT tokens
     - Protect dataset endpoints to allow only authenticated users
     - OAuth2PasswordRequestForm = Depends() for login form data from swagger ui
         - if not using form data, use pydantic model for login request body - ex - UserCreate model can be reused
-
-        
+                
 For background processing jobs          
     - Create Job model and JobResponse schema - job.py
     - Create jobs table in the db - Make to sure to run create_tables.py again and from the root folder
@@ -67,6 +66,24 @@ For background processing jobs
     - Create job creation endpoint that starts a background task to process a dataset
     - Protect job endpoints to allow only authenticated users
     - Register jobs router in the main app with versioned prefix /api/v1
+
+
+Logging -
+    - setup_logging function in core/logging.py
+    - call setup_logging in main.py before creating the FastAPI app instance   
+    - use anywhere in the app - import logging and get logger instance using logging.getLogger(__name__)
+
+Middleware for logging requests 
+    - Create log_requests middleware in middleware/request_logging.py
+    - log method, path, process time, status code   
+    - register middleware in main.py using app.middleware("http")(log_requests)
+
+/health endpoint using APIRouter
+    - Create health.py in api/v1 folder
+
+    
+/ready endpoint 
+
 
 
 

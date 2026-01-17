@@ -7,6 +7,9 @@ from ...core.database import get_db
 from ...core.security import hash_password, verify_password, create_access_token
 from ...models.user import User
 from ...schemas.user import UserCreate, Token
+import logging
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
@@ -23,6 +26,7 @@ async def register(user: UserCreate, db: AsyncSession = Depends(get_db)):
     new_user = User(username=user.username, hashed_password=hashed_password)
     db.add(new_user)
     await db.commit()
+    logger.info(f"New user registered: {user.username}")
     return {"message": "User registered successfully"}
 
 @router.post("/login", response_model=Token)
@@ -36,5 +40,6 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: AsyncSessi
             headers={"WWW-Authenticate": "Bearer"},
         )
     
+    logger.info(f"User {user.username} logged in successfully.")
     token = create_access_token(data={"sub": user.username})
     return {"access_token": token, "token_type": "bearer"}

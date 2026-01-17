@@ -6,7 +6,7 @@ from ...models.dataset import Dataset
 from sqlalchemy.ext.asyncio import AsyncSession
 from ...api.deps import get_current_user
 
-router = APIRouter(prefix="/datasets", tags=["datasets"])
+router = APIRouter(prefix="/datasets", tags=["Datasets"])
 
 # @router.post("/create", response_model=DatasetResponse, status_code=status.HTTP_201_CREATED)
 # def create_dataset(dataset: DatasetCreate):
