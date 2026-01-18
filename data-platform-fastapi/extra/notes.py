@@ -10,6 +10,9 @@ python-dotenv
 python-jose
 passlib
 aragon2-cffi [avoid bcrypt as it has limitation on 72 characters for hashing passwords]
+pytest 
+pytest-asyncio 
+httpx
 '''
 
 '''
@@ -82,9 +85,19 @@ Middleware for logging requests
     - Create health.py in api/v1 folder
 
     
-/ready endpoint 
+/ready endpoint using APIRouter
 
+Pytest based unit tests for dataset endpoints
+    - tests/conftest.py for test client fixture
+        - use asgi_lifespan LifespanManager to handle startup and shutdown events
+    - tests/db_test.py for test db session fixture
+    - tests/test_datasets.py for dataset endpoint tests 
+    - use pytest.mark.anyio for async tests
+    - pytest.ini to configure pytest settings
+    - python -m pytest tests -v -s
 
+Reason for app not shutting down properly - unclosed engine connections
+- Added shutdown event in main.py to dispose the engine connections on app shutdown
 
 
 Sample request to create dataset:

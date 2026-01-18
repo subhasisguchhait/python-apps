@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+asyncio
+aiosqlite
+pydantic
+python-multipart
+python-dotenv
+python-jose
+passlib
+aragon2-cffi
+pytest 
+pytest-asyncio 
+httpx
+asgi_lifespan
