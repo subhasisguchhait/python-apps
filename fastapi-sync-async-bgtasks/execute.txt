@@ -1,0 +1,23 @@
+How to see the difference quickly
+1) Start server
+uvicorn main:app --reload
+
+2) In Terminal A: run a long call
+curl "http://127.0.0.1:8000/async-io?delay_s=10"
+
+3) Immediately in Terminal B: run another call
+
+Try each of these and observe whether it returns quickly or “waits behind” the first request.
+
+curl "http://127.0.0.1:8000/async-io?delay_s=1"
+curl "http://127.0.0.1:8000/sync-blocking?delay_s=1"
+curl -X POST "http://127.0.0.1:8000/bg-email?to=test@example.com&delay_s=5"
+
+/async-io: second request usually responds quickly even while the 10s one is waiting (good concurrency for I/O).
+/sync-blocking: still works concurrently, but each request consumes a thread; under heavy load it degrades sooner.
+/bg-email: responds immediately; the “work” happens after response (watch console logs).
+
+
+curl "http://127.0.0.1:8000/cpu-async-bad"
+
+curl "http://127.0.0.1:8000/cpu-to-thread"
