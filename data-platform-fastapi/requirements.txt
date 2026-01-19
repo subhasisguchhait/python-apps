@@ -1,0 +1,15 @@
+fastapi
+uvicorn[standard]
+aiosqlite
+python-multipart
+python-dotenv
+python-jose[cryptography]
+passlib[bcrypt]
+argon2-cffi
+httpx
+gunicorn
+sqlalchemy
+
+pytest
+pytest-asyncio
+asgi_lifespan

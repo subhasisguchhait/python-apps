@@ -1,0 +1,52 @@
+List running containers:
+    docker ps 
+    docker ps -a 
+
+Stop a specific container:
+    docker stop <container_id>
+
+Remove the container:
+    docker rm <container_id>
+
+Stop all running containers:
+    docker stop $(docker ps -q)
+    docker rm $(docker ps -aq)
+
+List images:
+    docker images
+
+Remove by image name/id/force remove:
+    docker rmi data-platform-fastapi:latest
+    docker rmi cfeffa4f41a1
+    docker rmi -f data-platform-fastapi:latest
+
+This clears cache, dangling images, stopped containers, networks:
+    docker system prune -f
+
+If you want to remove all unused images as well:
+    docker system prune -a -f
+
+Rebuild the image (clean build)
+From the directory containing your Dockerfile:
+    docker build --no-cache -t data-platform-fastapi .
+
+Run image
+    docker run --rm -p 8000:8000 data-platform-fastapi
+
+Open browser
+    http://localhost:8000
+
+Check logs
+    docker logs <container_id>
+
+Run interactively
+    docker run -it -p 8000:8000 data-platform-fastapi
+
+Start an interactive shell
+    docker exec -it <container_id_or_name> /bin/bash    
+    docker exec -it <container_id_or_name> /bin/sh  --> /bin/bash is not available
+    exit to come out of the shell
+    ex - docker exec -it 9b3be5be6397 /bin/sh 
+
+To see the gunicorn process
+    docker top 9b3be5be6397  
