@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ job['title'] }} - Om Career</title>
+        {% include 'bootstrap.html' %}
+
+    </head>
+    <body>
+        {% include 'navbar.html' %}
+        {% include 'banner.html' %}
+        <div class="container">
+   
+        <h1 class="text-center mt-2 mb-4 comic-relief-bold">Om Careers</h1>
+
+        <h3 class="mb-2">{{ job['title'] }}</h3>
+        <p class="mt-0">{{ job['location'] }}</p>
+    
+        <h4>Responsibility</h4>
+        <p>{{ job['responsiblity'] }}</p>
+
+        <h4>Skills</h4>
+        <ul>
+            {% for skill in job['skills'].split("\n") %}
+                <li>{{ skill }}</li>
+            {% endfor %}
+        </ul>
+
+        <h4>Salary</h4>
+        <p>${{ job['salary'] }}</p>
+
+        {% include 'application_form.html' %}
+    
+        {% include 'footer.html' %}
+
+        </div>
+
+    </body>
+</html>

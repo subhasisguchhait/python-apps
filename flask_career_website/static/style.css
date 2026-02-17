@@ -1,0 +1,12 @@
+
+.comic-relief-bold {
+font-family: "Comic Relief", system-ui;
+font-weight: 700;
+font-style: normal;
+}
+.comic-relief-light {
+font-family: "Comic Relief", system-ui;
+font-weight: 300;
+font-style: normal;
+}
+

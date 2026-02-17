@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Application Submitted</title>
+        {% include 'bootstrap.html' %}
+
+    </head>
+    <body>
+        {% include 'navbar.html' %}
+        {% include 'banner.html' %}
+        <div class="container">
+    
+            <h1 class="text-center mt-2 mb-4 comic-relief-bold">Om Careers</h1>
+
+            <p class="mt-0">Your application for {{ job['title'] }} position has been received. We will review your application and get back to you soon.</p>
+
+            <b>Full Name</b>
+            <div class="mb-2">{{ data['name'] }}  </div>
+
+            <b>Email</b>
+            <div class="mb-2">{{ data['email'] }}  </div>
+
+            <b>LinkedIn URL</b>
+            <div class="mb-2">{{ data['linkedIn'] }}  </div>
+
+            <b>Work Experience</b>
+            <div class="mb-2">{{ data['work_experience'] }}  </div>
+
+            <b>Education</b>
+            <div class="mb-2">{{ data['education'] }}  </div>
+            
+            <b>Resume</b>
+            <div class="mb-2">{{ data['resume'] }}  </div>
+
+        </div>
+        {% include 'footer.html' %}
+    </body>
+</html>
